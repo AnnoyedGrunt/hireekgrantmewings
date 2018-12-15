@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body id="background">
+    <div id="content-container"></div>
+</body>
+    
+<script>
+var normalArtUrl = 'art_normal.png'
+var rareArtUrl = 'art_rare.png'
+var normalAudioUrl = 'voiceline_normal.wav'
+var rareAudioUrl = 'voiceline_rare.wav'
+
+function isRare() {
+    return Math.random() < 0.1
+}
+
+function makeCard(x, y, rare) {
+    var card = document.createElement('img')
+    var artUrl = rare ? rareArtUrl : normalArtUrl
+    card.src = artUrl
+    card.style.position = 'absolute'
+    card.style.left = `${x}px`
+    card.style.top = `${y}px`
+    card.style.transform = 'translate(-50%,-50%)'
+    return card
+}
+    
+function playSound(rare) {
+    var audioUrl = rare ? rareAudioUrl : normalAudioUrl
+    var audio = new Audio(audioUrl)
+    audio.play()
+}
+    
+document.getElementById('content-container').onmousedown = function(event) {
+    var rare = isRare()
+    var newNode = makeCard(event.clientX, event.clientY, rare)
+    document.getElementById('content-container').appendChild(newNode)
+    playSound(rare)
+}
+
+</script>
+</html>
